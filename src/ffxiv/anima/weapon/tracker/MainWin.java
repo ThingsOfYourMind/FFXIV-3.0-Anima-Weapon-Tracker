@@ -38,8 +38,7 @@ public class MainWin extends javax.swing.JFrame {
     String ixali_oaknot_icon = ".\\media\\currency\\ixali_oaknot_icon.png";
     
     
-    // used for collectin all the values
-    // only declared at a global level, not instanciated
+    // used for collecting all the values
     Collection collection;
     ArrayList<Integer> allValues;
     
