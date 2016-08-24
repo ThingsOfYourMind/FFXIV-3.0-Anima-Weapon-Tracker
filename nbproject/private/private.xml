@@ -5,7 +5,7 @@
             <url>src/ffxiv/anima/weapon/tracker/MainWin.java</url>
             <bookmark id="1">
                 <name/>
-                <line>2063</line>
+                <line>2161</line>
                 <key/>
             </bookmark>
         </file>
@@ -14,7 +14,6 @@
         <group>
             <file>file:/C:/Users/Workhorse/Documents/NetBeansProjects/FFXIV%20Anima%20Weapon%20Tracker/src/ffxiv/anima/weapon/tracker/MainWin.java</file>
             <file>file:/C:/Users/Workhorse/Documents/NetBeansProjects/FFXIV%20Anima%20Weapon%20Tracker/src/ffxiv/anima/weapon/tracker/FFXIVAnimaWeaponTracker.java</file>
-            <file>file:/C:/Users/Workhorse/Documents/NetBeansProjects/FFXIV%20Anima%20Weapon%20Tracker/src/ffxiv/anima/weapon/tracker/StageSelectorComboBoxModel.java</file>
             <file>file:/C:/Users/Workhorse/Documents/NetBeansProjects/FFXIV%20Anima%20Weapon%20Tracker/src/ffxiv/anima/weapon/tracker/Collection.java</file>
         </group>
     </open-files>
