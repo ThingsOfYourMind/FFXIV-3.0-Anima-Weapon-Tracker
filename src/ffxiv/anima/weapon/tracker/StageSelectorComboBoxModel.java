@@ -13,7 +13,7 @@ import javax.swing.ComboBoxModel;
  * @author Workhorse
  */
 public class StageSelectorComboBoxModel extends AbstractListModel implements ComboBoxModel {
-    String[] stageSelect = {"Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5"};
+    String[] stageSelect = {"Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Tokens"};
     
     String selection = null;
     
@@ -23,7 +23,7 @@ public class StageSelectorComboBoxModel extends AbstractListModel implements Com
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public String getElementAt(int index) {
         return stageSelect[index];
     }
 
@@ -33,7 +33,7 @@ public class StageSelectorComboBoxModel extends AbstractListModel implements Com
     }
 
     @Override
-    public Object getSelectedItem() {
+    public String getSelectedItem() {
         return selection;
     }
     

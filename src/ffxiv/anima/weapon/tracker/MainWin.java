@@ -1,8 +1,12 @@
-//TODO:  Clear Button doesn't reset progress bars on stage3
-//TODO: rework save data, to save stages 1 and 2, and current stage
+// TO WORK ON
 //TODO: fix stage1 image icon sizes, resize to 32x32
 
-//TODO: update progress bars, on load and clear -  DONE
+
+// COMPLETED 
+//TODO: Clear Button doesn't reset progress bars on stage3          DONE
+//TODO: update progress bars, on load and clear -                   DONE
+//TODO: rework save data, to save stages 1 and 2, and current stage DONE
+//TODO: set other progress bars under setProgressBars()             DONE
 
 /*
  * Main window, holds the GUI and functionality coding
@@ -29,10 +33,13 @@ import javax.swing.JProgressBar;
 public class MainWin extends javax.swing.JFrame {
 
     
-    String appTitle = "FFXIV: 3.0 Anima Weapon Tracker ";
+    //title is combined in JFrames's properties under Title <user code>
+    String appTitle = "FFXIV: Anima Weapon Tracker ";
     String majorVersion = "0";
     String minorVersion = "2";
-    String buildVersion = "2";
+    String buildVersion = "3";
+    String forPatch = "Patch 3.38";
+    
     
     //UI icons stuffs
     String ubone_icon = ".\\media\\Unidentifiable_Bone_Icon.png";
@@ -72,7 +79,7 @@ public class MainWin extends javax.swing.JFrame {
     String saveFilename = "data.save";
     Boolean file_exist = false;
     
-    //to track completed stages
+    //to track completed stages //NOT USED //will remove in next version if not used
     List<Boolean> stageCompleted = Arrays.asList(false, false, false, false, false);
     
     /**
@@ -125,17 +132,15 @@ public class MainWin extends javax.swing.JFrame {
                 appWidth, 
                 appHeight);
         
-        // since I only programmed in Stage 3, 
-        // this changes the tabs to the 3rd tab
-        jTabbedPane1.setSelectedIndex(0);
-        
         // sets app Icon
         this.setIconImage(new ImageIcon(".\\media\\moogle_icon.png").getImage());
         
         stage_selector.setModel(new StageSelectorComboBoxModel());
-        stage_selector.setSelectedIndex(jTabbedPane1.getSelectedIndex());
         
-        //astral_nodule_panel
+        //hide some components
+        stage_selector.setVisible(false);
+        testButton.setVisible(false);
+        tabs_stages.remove(5); //removes tokens tab for now
     }
 
     /**
@@ -151,7 +156,7 @@ public class MainWin extends javax.swing.JFrame {
         clear_button = new javax.swing.JButton();
         load_button = new javax.swing.JButton();
         status_text = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabs_stages = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         astral_nodule_panel = new javax.swing.JPanel();
@@ -169,6 +174,8 @@ public class MainWin extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         astral_nodule_acquire_button = new javax.swing.JButton();
+        jLabel47 = new javax.swing.JLabel();
+        astral_nodules_value = new javax.swing.JLabel();
         umbral_nodule_panel = new javax.swing.JPanel();
         luminous_ice_crystal_pic = new javax.swing.JLabel();
         luminous_earth_crystal_pic = new javax.swing.JLabel();
@@ -184,6 +191,9 @@ public class MainWin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        umbral_nodules_value = new javax.swing.JLabel();
+        stage1CompleteButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
@@ -197,16 +207,16 @@ public class MainWin extends javax.swing.JFrame {
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
-        jLabel49 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
-        jLabel52 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
-        jLabel54 = new javax.swing.JLabel();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
+        stage2_stage01 = new javax.swing.JLabel();
+        stage2_stage02 = new javax.swing.JLabel();
+        stage2_stage03 = new javax.swing.JLabel();
+        stage2_stage04 = new javax.swing.JLabel();
+        stage2_stage05 = new javax.swing.JLabel();
+        stage2_stage06 = new javax.swing.JLabel();
+        stage2_stage07 = new javax.swing.JLabel();
+        stage2_stage08 = new javax.swing.JLabel();
+        stage2_stage09 = new javax.swing.JLabel();
+        stage2_stage10 = new javax.swing.JLabel();
         stage2_pbar = new javax.swing.JProgressBar();
         stage2CompleteButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -245,6 +255,7 @@ public class MainWin extends javax.swing.JFrame {
         fast_acting_allagan_catalyst_pbar = new javax.swing.JProgressBar();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
@@ -294,9 +305,10 @@ public class MainWin extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         stage_selector = new javax.swing.JComboBox<>();
+        testButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(appTitle +"v" +majorVersion +"." + minorVersion +"."+ buildVersion);
+        setTitle(appTitle +"v" +majorVersion +"." + minorVersion +"."+ buildVersion + " - For " + forPatch);
         setBackground(new java.awt.Color(102, 102, 102));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(600, 530));
@@ -325,6 +337,12 @@ public class MainWin extends javax.swing.JFrame {
         });
 
         status_text.setText(" ");
+
+        tabs_stages.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabs_stagesMousePressed(evt);
+            }
+        });
 
         jPanel3.setPreferredSize(new java.awt.Dimension(550, 420));
 
@@ -418,6 +436,13 @@ public class MainWin extends javax.swing.JFrame {
             }
         });
 
+        jLabel47.setText("Nodules:");
+
+        astral_nodules_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        astral_nodules_value.setForeground(new java.awt.Color(102, 0, 0));
+        astral_nodules_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        astral_nodules_value.setText("00");
+
         javax.swing.GroupLayout astral_nodule_panelLayout = new javax.swing.GroupLayout(astral_nodule_panel);
         astral_nodule_panel.setLayout(astral_nodule_panelLayout);
         astral_nodule_panelLayout.setHorizontalGroup(
@@ -426,36 +451,44 @@ public class MainWin extends javax.swing.JFrame {
                 .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(astral_nodule_pbar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(astral_nodule_panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(astral_nodule_panelLayout.createSequentialGroup()
-                                .addComponent(luminous_fire_crystal_pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()
+                                .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(astral_nodule_panelLayout.createSequentialGroup()
-                                        .addComponent(luminous_fire_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(luminous_fire_crystal_pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(luminous_fire_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, astral_nodule_panelLayout.createSequentialGroup()
-                                .addComponent(luminous_wind_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(astral_nodule_panelLayout.createSequentialGroup()
+                                                .addComponent(luminous_fire_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(luminous_fire_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, astral_nodule_panelLayout.createSequentialGroup()
+                                        .addComponent(luminous_wind_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(astral_nodule_panelLayout.createSequentialGroup()
+                                                .addComponent(luminous_wind_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(luminous_wind_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(astral_nodule_panelLayout.createSequentialGroup()
-                                        .addComponent(luminous_wind_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(luminous_lightning_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(luminous_wind_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(astral_nodule_panelLayout.createSequentialGroup()
+                                                .addComponent(luminous_lightning_crystal_text)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(luminous_lightning_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(astral_nodule_panelLayout.createSequentialGroup()
-                                .addComponent(luminous_lightning_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(astral_nodule_acquire_button)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel47)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(astral_nodule_panelLayout.createSequentialGroup()
-                                        .addComponent(luminous_lightning_crystal_text)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(luminous_lightning_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addComponent(astral_nodule_acquire_button))
+                                .addComponent(astral_nodules_value)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(147, 147, 147))
         );
         astral_nodule_panelLayout.setVerticalGroup(
@@ -488,7 +521,10 @@ public class MainWin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(astral_nodule_pbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(astral_nodule_acquire_button)
+                .addGroup(astral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(astral_nodule_acquire_button)
+                    .addComponent(jLabel47)
+                    .addComponent(astral_nodules_value))
                 .addContainerGap())
         );
 
@@ -578,46 +614,59 @@ public class MainWin extends javax.swing.JFrame {
         jLabel36.setForeground(new java.awt.Color(102, 102, 102));
         jLabel36.setText("Acquire from: Dravanian Hinterlands");
 
+        jLabel48.setText("Nodules:");
+
+        umbral_nodules_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        umbral_nodules_value.setForeground(new java.awt.Color(102, 0, 0));
+        umbral_nodules_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        umbral_nodules_value.setText("00");
+
         javax.swing.GroupLayout umbral_nodule_panelLayout = new javax.swing.GroupLayout(umbral_nodule_panel);
         umbral_nodule_panel.setLayout(umbral_nodule_panelLayout);
         umbral_nodule_panelLayout.setHorizontalGroup(
             umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
-                        .addComponent(luminous_water_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(luminous_water_crystal_text)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(luminous_water_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, umbral_nodule_panelLayout.createSequentialGroup()
-                        .addComponent(luminous_earth_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(luminous_earth_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(luminous_earth_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
-                        .addComponent(luminous_ice_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
-                                .addComponent(luminous_ice_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(luminous_ice_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(umbral_nodule_pbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
-                .addComponent(umbral_nodule_acquire_button)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
+                                .addComponent(luminous_water_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(luminous_water_crystal_text)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(luminous_water_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, umbral_nodule_panelLayout.createSequentialGroup()
+                                .addComponent(luminous_earth_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(luminous_earth_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(luminous_earth_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
+                                .addComponent(luminous_ice_crystal_pic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
+                                        .addComponent(luminous_ice_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(luminous_ice_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
+                        .addComponent(umbral_nodule_acquire_button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel48)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(umbral_nodules_value)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         umbral_nodule_panelLayout.setVerticalGroup(
             umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -649,9 +698,20 @@ public class MainWin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(umbral_nodule_pbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(umbral_nodule_acquire_button)
+                .addGroup(umbral_nodule_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(umbral_nodule_acquire_button)
+                    .addComponent(jLabel48)
+                    .addComponent(umbral_nodules_value))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        stage1CompleteButton.setText("Complete Stage 1");
+        stage1CompleteButton.setEnabled(false);
+        stage1CompleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                stage1CompleteButtonMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -664,9 +724,12 @@ public class MainWin extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(astral_nodule_panel, 262, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(umbral_nodule_panel, 261, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(stage1CompleteButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(astral_nodule_panel, 262, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(umbral_nodule_panel, 261, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 16, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -678,10 +741,12 @@ public class MainWin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(umbral_nodule_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                     .addComponent(astral_nodule_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stage1CompleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Stage 1", jPanel3);
+        tabs_stages.addTab("Stage 1", jPanel3);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Toughening Up");
@@ -718,123 +783,123 @@ public class MainWin extends javax.swing.JFrame {
         jLabel46.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel46.setText("10.");
 
-        jLabel47.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel47.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel47.setText("Snowcloack");
-        jLabel47.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel47.setOpaque(true);
-        jLabel47.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage01.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage01.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage01.setText("Snowcloack");
+        stage2_stage01.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage01.setOpaque(true);
+        stage2_stage01.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel47MousePressed(evt);
+                stage2_stage01MousePressed(evt);
             }
         });
 
-        jLabel48.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel48.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel48.setText("Sastasha (Hard)");
-        jLabel48.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel48.setOpaque(true);
-        jLabel48.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage02.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage02.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage02.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage02.setText("Sastasha (Hard)");
+        stage2_stage02.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage02.setOpaque(true);
+        stage2_stage02.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel48MousePressed(evt);
+                stage2_stage02MousePressed(evt);
             }
         });
 
-        jLabel49.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel49.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel49.setText("The Temple of Qarn (Hard)");
-        jLabel49.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel49.setOpaque(true);
-        jLabel49.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage03.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage03.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage03.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage03.setText("The Temple of Qarn (Hard)");
+        stage2_stage03.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage03.setOpaque(true);
+        stage2_stage03.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel49MousePressed(evt);
+                stage2_stage03MousePressed(evt);
             }
         });
 
-        jLabel50.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel50.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel50.setText("Keeper of the Lake");
-        jLabel50.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel50.setOpaque(true);
-        jLabel50.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage04.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage04.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage04.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage04.setText("Keeper of the Lake");
+        stage2_stage04.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage04.setOpaque(true);
+        stage2_stage04.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel50MousePressed(evt);
+                stage2_stage04MousePressed(evt);
             }
         });
 
-        jLabel51.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel51.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel51.setText("Wanderer's Palace (Hard)");
-        jLabel51.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel51.setOpaque(true);
-        jLabel51.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage05.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage05.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage05.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage05.setText("Wanderer's Palace (Hard)");
+        stage2_stage05.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage05.setOpaque(true);
+        stage2_stage05.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel51MousePressed(evt);
+                stage2_stage05MousePressed(evt);
             }
         });
 
-        jLabel52.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel52.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("Amdapor Keep (Hard)");
-        jLabel52.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel52.setOpaque(true);
-        jLabel52.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage06.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage06.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage06.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage06.setText("Amdapor Keep (Hard)");
+        stage2_stage06.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage06.setOpaque(true);
+        stage2_stage06.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel52MousePressed(evt);
+                stage2_stage06MousePressed(evt);
             }
         });
 
-        jLabel53.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel53.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel53.setText("Dusk Vigil");
-        jLabel53.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel53.setOpaque(true);
-        jLabel53.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage07.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage07.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage07.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage07.setText("Dusk Vigil");
+        stage2_stage07.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage07.setOpaque(true);
+        stage2_stage07.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel53MousePressed(evt);
+                stage2_stage07MousePressed(evt);
             }
         });
 
-        jLabel54.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel54.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel54.setText("Sohm Al");
-        jLabel54.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel54.setOpaque(true);
-        jLabel54.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage08.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage08.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage08.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage08.setText("Sohm Al");
+        stage2_stage08.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage08.setOpaque(true);
+        stage2_stage08.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel54MousePressed(evt);
+                stage2_stage08MousePressed(evt);
             }
         });
 
-        jLabel55.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel55.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel55.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel55.setText("The Aery");
-        jLabel55.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel55.setOpaque(true);
-        jLabel55.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage09.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage09.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage09.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage09.setText("The Aery");
+        stage2_stage09.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage09.setOpaque(true);
+        stage2_stage09.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel55MousePressed(evt);
+                stage2_stage09MousePressed(evt);
             }
         });
 
-        jLabel56.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel56.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel56.setText("The Vault");
-        jLabel56.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel56.setOpaque(true);
-        jLabel56.addMouseListener(new java.awt.event.MouseAdapter() {
+        stage2_stage10.setBackground(new java.awt.Color(204, 204, 204));
+        stage2_stage10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        stage2_stage10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stage2_stage10.setText("The Vault");
+        stage2_stage10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        stage2_stage10.setOpaque(true);
+        stage2_stage10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel56MousePressed(evt);
+                stage2_stage10MousePressed(evt);
             }
         });
 
@@ -857,16 +922,16 @@ public class MainWin extends javax.swing.JFrame {
                     .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
-                    .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel53, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel54, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel55, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(stage2_stage03, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .addComponent(stage2_stage02, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage04, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage05, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage06, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage07, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage08, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage09, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stage2_stage01, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
@@ -875,43 +940,43 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel37)
-                    .addComponent(jLabel47))
+                    .addComponent(stage2_stage01))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
-                    .addComponent(jLabel48))
+                    .addComponent(stage2_stage02))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel39)
-                    .addComponent(jLabel49))
+                    .addComponent(stage2_stage03))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
-                    .addComponent(jLabel50))
+                    .addComponent(stage2_stage04))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel41)
-                    .addComponent(jLabel51))
+                    .addComponent(stage2_stage05))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42)
-                    .addComponent(jLabel52))
+                    .addComponent(stage2_stage06))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel43)
-                    .addComponent(jLabel53))
+                    .addComponent(stage2_stage07))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel44)
-                    .addComponent(jLabel54))
+                    .addComponent(stage2_stage08))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel45)
-                    .addComponent(jLabel55))
+                    .addComponent(stage2_stage09))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel46)
-                    .addComponent(jLabel56))
+                    .addComponent(stage2_stage10))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -956,7 +1021,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Stage 2", jPanel4);
+        tabs_stages.addTab("Stage 2", jPanel4);
 
         jPanel5.setMaximumSize(new java.awt.Dimension(520, 420));
         jPanel5.setPreferredSize(new java.awt.Dimension(520, 420));
@@ -978,7 +1043,7 @@ public class MainWin extends javax.swing.JFrame {
         ubone_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ubone_value.setForeground(new java.awt.Color(102, 0, 0));
         ubone_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        ubone_value.setText("00 / 20");
+        ubone_value.setText("00 / 10");
         ubone_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ubone_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -993,12 +1058,12 @@ public class MainWin extends javax.swing.JFrame {
         adamantite_francesca_pic.setPreferredSize(new java.awt.Dimension(32, 32));
         adamantite_francesca_pic.setRequestFocusEnabled(false);
 
-        adamantite_francesca_text.setText("HQ Adamantite Francesca:");
+        adamantite_francesca_text.setText("Adamantite Francesca:");
 
         adamantite_francesca_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         adamantite_francesca_value.setForeground(new java.awt.Color(102, 0, 0));
         adamantite_francesca_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        adamantite_francesca_value.setText("0 / 4");
+        adamantite_francesca_value.setText("00 / 04");
         adamantite_francesca_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         adamantite_francesca_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1021,7 +1086,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(adamantite_francesca_text)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adamantite_francesca_value, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                .addComponent(adamantite_francesca_value, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1051,12 +1116,12 @@ public class MainWin extends javax.swing.JFrame {
         dispelling_arrow_pic.setPreferredSize(new java.awt.Dimension(32, 32));
         dispelling_arrow_pic.setRequestFocusEnabled(false);
 
-        dispelling_arrow_text.setText("HQ Dispelling Arrow:");
+        dispelling_arrow_text.setText("Dispelling Arrow:");
 
         dispelling_arrow_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         dispelling_arrow_value.setForeground(new java.awt.Color(102, 0, 0));
         dispelling_arrow_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        dispelling_arrow_value.setText("0 / 4");
+        dispelling_arrow_value.setText("00 / 04");
         dispelling_arrow_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         dispelling_arrow_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1076,7 +1141,7 @@ public class MainWin extends javax.swing.JFrame {
         uore_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         uore_value.setForeground(new java.awt.Color(102, 0, 0));
         uore_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        uore_value.setText("00 / 20");
+        uore_value.setText("00 / 10");
         uore_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         uore_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1137,7 +1202,7 @@ public class MainWin extends javax.swing.JFrame {
         ushell_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ushell_value.setForeground(new java.awt.Color(102, 0, 0));
         ushell_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        ushell_value.setText("00 / 20");
+        ushell_value.setText("00 / 10");
         ushell_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ushell_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1145,7 +1210,7 @@ public class MainWin extends javax.swing.JFrame {
             }
         });
 
-        titanium_alloy_mirror_text.setText("HQ Titanium Alloy Mirror:");
+        titanium_alloy_mirror_text.setText("Titanium Alloy Mirror:");
 
         titanium_alloy_mirror_pic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titanium_alloy_mirror_pic.setMaximumSize(new java.awt.Dimension(32, 32));
@@ -1157,7 +1222,7 @@ public class MainWin extends javax.swing.JFrame {
         titanium_alloy_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         titanium_alloy_value.setForeground(new java.awt.Color(102, 0, 0));
         titanium_alloy_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        titanium_alloy_value.setText("0 / 4");
+        titanium_alloy_value.setText("00 / 04");
         titanium_alloy_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         titanium_alloy_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1180,7 +1245,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(titanium_alloy_mirror_text)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(titanium_alloy_value, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                .addComponent(titanium_alloy_value, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1215,7 +1280,7 @@ public class MainWin extends javax.swing.JFrame {
         useed_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         useed_value.setForeground(new java.awt.Color(102, 0, 0));
         useed_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        useed_value.setText("00 / 20");
+        useed_value.setText("00 / 10");
         useed_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         useed_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1230,12 +1295,12 @@ public class MainWin extends javax.swing.JFrame {
         kingcake_pic.setPreferredSize(new java.awt.Dimension(32, 32));
         kingcake_pic.setRequestFocusEnabled(false);
 
-        kingcake_text.setText("HQ Kingcake:");
+        kingcake_text.setText("Kingcake:");
 
         kingcake_value.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         kingcake_value.setForeground(new java.awt.Color(102, 0, 0));
         kingcake_value.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        kingcake_value.setText("0 / 4");
+        kingcake_value.setText("00 / 04");
         kingcake_value.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         kingcake_value.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -1327,10 +1392,23 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap(128, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Stage 3", jPanel5);
+        tabs_stages.addTab("Stage 3", jPanel5);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Finding Your Voice");
+
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Aether Oils"));
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 134, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1338,18 +1416,24 @@ public class MainWin extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
-                .addContainerGap(437, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 427, Short.MAX_VALUE))
+                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(384, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(221, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Stage 4", jPanel6);
+        tabs_stages.addTab("Stage 4", jPanel6);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("A Dream Fulfilled");
@@ -1371,7 +1455,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap(384, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Stage 5", jPanel7);
+        tabs_stages.addTab("Stage 5", jPanel7);
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Tomestones / Seals"));
 
@@ -1827,9 +1911,18 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Tokens", jPanel10);
+        tabs_stages.addTab("Tokens", jPanel10);
 
         stage_selector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        stage_selector.setToolTipText("Select which tab to save at");
+        stage_selector.setEnabled(false);
+
+        testButton.setText("TestButton");
+        testButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                testButtonMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1839,10 +1932,12 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tabs_stages, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(clear_button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(testButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(status_text, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1857,14 +1952,15 @@ public class MainWin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(tabs_stages, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(save_button)
                     .addComponent(clear_button)
                     .addComponent(load_button)
                     .addComponent(status_text)
-                    .addComponent(stage_selector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(stage_selector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(testButton))
                 .addContainerGap())
         );
 
@@ -1873,10 +1969,29 @@ public class MainWin extends javax.swing.JFrame {
 
     private void save_buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_buttonMousePressed
         allValues = new ArrayList<>();
+        
+        //load values into Iterator i
         getAllValues();
         Iterator i = allValues.iterator();
-        collection = new Collection((int)i.next(),(int)i.next(),(int)i.next(),(int)i.next(),
-                                    (int)i.next(),(int)i.next(),(int)i.next(),(int)i.next());
+        
+        collection = new Collection((int)i.next());
+        
+        collection.saveStage01(
+                (int)i.next(),(int)i.next(),(int)i.next(),
+                (int)i.next(),(int)i.next(),(int)i.next(),
+                (int)i.next(),(int)i.next());
+        
+        collection.saveStage02(
+                (int)i.next(), (int)i.next(), 
+                (int)i.next(), (int)i.next(), 
+                (int)i.next(), (int)i.next(), 
+                (int)i.next(), (int)i.next(), 
+                (int)i.next(), (int)i.next());
+        
+        collection.saveStage03(
+                (int)i.next(), (int)i.next(), (int)i.next(), (int)i.next(), 
+                (int)i.next(), (int)i.next(), (int)i.next(), (int)i.next());
+        
         collection.SaveData();
         
         status_text.setText("saved...");
@@ -1891,14 +2006,30 @@ public class MainWin extends javax.swing.JFrame {
     }//GEN-LAST:event_load_buttonMousePressed
 
     private void clear_buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clear_buttonMousePressed
-        ubone_value.setText("00 / 20");
-        uore_value.setText("00 / 20");
-        useed_value.setText("00 / 20");
-        ushell_value.setText("00 / 20");
-        adamantite_francesca_value.setText("0 / 4");
-        dispelling_arrow_value.setText("0 / 4");
-        titanium_alloy_value.setText("0 / 4");
-        kingcake_value.setText("0 / 4");
+        luminous_fire_crystal_value.setText("00 / 03");
+        luminous_wind_crystal_value.setText("00 / 03");
+        luminous_lightning_crystal_value.setText("00 / 03");
+        luminous_ice_crystal_value.setText("00 / 03");
+        luminous_earth_crystal_value.setText("00 / 03");
+        luminous_water_crystal_value.setText("00 / 03");
+        
+        astral_nodules_value.setText("00");
+        umbral_nodules_value.setText("00");
+        
+        clearStage2Progress(stage2_pbar);
+        
+        ubone_value.setText("00 / 10");
+        uore_value.setText("00 / 10");
+        useed_value.setText("00 / 10");
+        ushell_value.setText("00 / 10");
+        adamantite_francesca_value.setText("00 / 04");
+        dispelling_arrow_value.setText("00 / 04");
+        titanium_alloy_value.setText("00 / 04");
+        kingcake_value.setText("00 / 04");
+        
+        
+        
+        updateAllProgressBars();
     }//GEN-LAST:event_clear_buttonMousePressed
 
     private void luminous_fire_crystal_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_luminous_fire_crystal_valueMousePressed
@@ -1952,120 +2083,138 @@ public class MainWin extends javax.swing.JFrame {
     private void kingcake_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kingcake_valueMousePressed
         int mouseButton = evt.getButton();
         String value = kingcake_value.getText();
-        kingcake_value.setText(changeValue(value, mouseButton, 1, 4));
-        progressbar_change(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
+        kingcake_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
     }//GEN-LAST:event_kingcake_valueMousePressed
 
     private void useed_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_useed_valueMousePressed
         int mouseButton = evt.getButton();
         String value = useed_value.getText();
-        useed_value.setText(changeValue(value, mouseButton, 2, 20));
-        progressbar_change(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
+        useed_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
     }//GEN-LAST:event_useed_valueMousePressed
 
     private void titanium_alloy_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titanium_alloy_valueMousePressed
         int mouseButton = evt.getButton();
         String value = titanium_alloy_value.getText();
-        titanium_alloy_value.setText(changeValue(value, mouseButton, 1, 4));
-        progressbar_change(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);
+        titanium_alloy_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);
     }//GEN-LAST:event_titanium_alloy_valueMousePressed
 
     private void ushell_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ushell_valueMousePressed
         int mouseButton = evt.getButton();
         String value = ushell_value.getText();
-        ushell_value.setText(changeValue(value, mouseButton, 2, 20));
-        progressbar_change(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);
+        ushell_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);
     }//GEN-LAST:event_ushell_valueMousePressed
 
     private void uore_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uore_valueMousePressed
         int mouseButton = evt.getButton();
         String value = uore_value.getText();
-        uore_value.setText(changeValue(value, mouseButton, 2, 20));
-        progressbar_change(divine_water_pbar, uore_value, dispelling_arrow_value);
+        uore_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(divine_water_pbar, uore_value, dispelling_arrow_value);
     }//GEN-LAST:event_uore_valueMousePressed
 
     private void dispelling_arrow_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dispelling_arrow_valueMousePressed
         int mouseButton = evt.getButton();
         String value = dispelling_arrow_value.getText();
-        dispelling_arrow_value.setText(changeValue(value, mouseButton, 1, 4));
-        progressbar_change(divine_water_pbar, uore_value, dispelling_arrow_value);
+        dispelling_arrow_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(divine_water_pbar, uore_value, dispelling_arrow_value);
     }//GEN-LAST:event_dispelling_arrow_valueMousePressed
 
     private void adamantite_francesca_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adamantite_francesca_valueMousePressed
         int mouseButton = evt.getButton();
         String value = adamantite_francesca_value.getText();
-        adamantite_francesca_value.setText(changeValue(value, mouseButton, 1, 4));
-        progressbar_change(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
+        adamantite_francesca_value.setText(changeValue(value, mouseButton, 2, 99));
+        progressbar_change_stage3(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
     }//GEN-LAST:event_adamantite_francesca_valueMousePressed
 
     private void ubone_valueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ubone_valueMousePressed
         int mouseButton = evt.getButton();
         String value = ubone_value.getText();
-        ubone_value.setText(changeValue(value, mouseButton, 2, 20));
+        ubone_value.setText(changeValue(value, mouseButton, 2, 99));
         // set progress bar
-        progressbar_change(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
+        progressbar_change_stage3(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
     }//GEN-LAST:event_ubone_valueMousePressed
 
-    private void jLabel47MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel47MousePressed
-        stage2ChangeStatus(jLabel47);
-    }//GEN-LAST:event_jLabel47MousePressed
+    private void stage2_stage01MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage01MousePressed
+        stage2ChangeStatus(stage2_stage01);
+    }//GEN-LAST:event_stage2_stage01MousePressed
 
-    private void jLabel48MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel48MousePressed
-        stage2ChangeStatus(jLabel48);
-    }//GEN-LAST:event_jLabel48MousePressed
+    private void stage2_stage02MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage02MousePressed
+        stage2ChangeStatus(stage2_stage02);
+    }//GEN-LAST:event_stage2_stage02MousePressed
 
-    private void jLabel49MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel49MousePressed
-        stage2ChangeStatus(jLabel49);
-    }//GEN-LAST:event_jLabel49MousePressed
+    private void stage2_stage03MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage03MousePressed
+        stage2ChangeStatus(stage2_stage03);
+    }//GEN-LAST:event_stage2_stage03MousePressed
 
-    private void jLabel50MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel50MousePressed
-        stage2ChangeStatus(jLabel50);
-    }//GEN-LAST:event_jLabel50MousePressed
+    private void stage2_stage04MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage04MousePressed
+        stage2ChangeStatus(stage2_stage04);
+    }//GEN-LAST:event_stage2_stage04MousePressed
 
-    private void jLabel51MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel51MousePressed
-        stage2ChangeStatus(jLabel51);
-    }//GEN-LAST:event_jLabel51MousePressed
+    private void stage2_stage05MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage05MousePressed
+        stage2ChangeStatus(stage2_stage05);
+    }//GEN-LAST:event_stage2_stage05MousePressed
 
-    private void jLabel52MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel52MousePressed
-        stage2ChangeStatus(jLabel52);
-    }//GEN-LAST:event_jLabel52MousePressed
+    private void stage2_stage06MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage06MousePressed
+        stage2ChangeStatus(stage2_stage06);
+    }//GEN-LAST:event_stage2_stage06MousePressed
 
-    private void jLabel53MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MousePressed
-        stage2ChangeStatus(jLabel53);
-    }//GEN-LAST:event_jLabel53MousePressed
+    private void stage2_stage07MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage07MousePressed
+        stage2ChangeStatus(stage2_stage07);
+    }//GEN-LAST:event_stage2_stage07MousePressed
 
-    private void jLabel54MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel54MousePressed
-        stage2ChangeStatus(jLabel54);
-    }//GEN-LAST:event_jLabel54MousePressed
+    private void stage2_stage08MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage08MousePressed
+        stage2ChangeStatus(stage2_stage08);
+    }//GEN-LAST:event_stage2_stage08MousePressed
 
-    private void jLabel55MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel55MousePressed
-        stage2ChangeStatus(jLabel55);
-    }//GEN-LAST:event_jLabel55MousePressed
+    private void stage2_stage09MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage09MousePressed
+        stage2ChangeStatus(stage2_stage09);
+    }//GEN-LAST:event_stage2_stage09MousePressed
 
-    private void jLabel56MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel56MousePressed
-        stage2ChangeStatus(jLabel56);
-    }//GEN-LAST:event_jLabel56MousePressed
+    private void stage2_stage10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2_stage10MousePressed
+        stage2ChangeStatus(stage2_stage10);
+    }//GEN-LAST:event_stage2_stage10MousePressed
 
     private void astral_nodule_acquire_buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_astral_nodule_acquire_buttonMousePressed
         if (astral_nodule_acquire_button.isEnabled()){
-            acquiredNodule(luminous_fire_crystal_value, luminous_wind_crystal_value, luminous_lightning_crystal_value);
+            acquiredNodule(luminous_fire_crystal_value, luminous_wind_crystal_value, luminous_lightning_crystal_value, astral_nodules_value);
             progressbar_change_stage1(astral_nodule_pbar, luminous_fire_crystal_value, luminous_wind_crystal_value, luminous_lightning_crystal_value, astral_nodule_acquire_button);   
+            checkNodules(astral_nodules_value,umbral_nodules_value);
         }
     }//GEN-LAST:event_astral_nodule_acquire_buttonMousePressed
 
     private void umbral_nodule_acquire_buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_umbral_nodule_acquire_buttonMousePressed
         if (umbral_nodule_acquire_button.isEnabled()){
-            acquiredNodule(luminous_ice_crystal_value, luminous_earth_crystal_value, luminous_water_crystal_value);
+            acquiredNodule(luminous_ice_crystal_value, luminous_earth_crystal_value, luminous_water_crystal_value, umbral_nodules_value);
             progressbar_change_stage1(umbral_nodule_pbar, luminous_ice_crystal_value, luminous_earth_crystal_value, luminous_water_crystal_value, umbral_nodule_acquire_button);
+            checkNodules(astral_nodules_value,umbral_nodules_value);
         }
     }//GEN-LAST:event_umbral_nodule_acquire_buttonMousePressed
 
     private void stage2CompleteButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage2CompleteButtonMousePressed
         if (stage2CompleteButton.isEnabled()){
-            jTabbedPane1.setSelectedIndex(2);
+            tabs_stages.setSelectedIndex(2);
             clearStage2Progress(stage2_pbar);
+            stage2CompleteButton.setEnabled(false);
         }
     }//GEN-LAST:event_stage2CompleteButtonMousePressed
+
+    private void tabs_stagesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabs_stagesMousePressed
+        stage_selector.setSelectedIndex(tabs_stages.getSelectedIndex());
+    }//GEN-LAST:event_tabs_stagesMousePressed
+
+    private void testButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testButtonMousePressed
+        // this is just a System.out.println test, to test for values
+    }//GEN-LAST:event_testButtonMousePressed
+
+    private void stage1CompleteButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stage1CompleteButtonMousePressed
+        if(stage1CompleteButton.isEnabled()){
+            consumeNodules(astral_nodules_value,umbral_nodules_value);
+            checkNodules(astral_nodules_value,umbral_nodules_value);
+        }
+    }//GEN-LAST:event_stage1CompleteButtonMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2076,6 +2225,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JButton astral_nodule_acquire_button;
     private javax.swing.JPanel astral_nodule_panel;
     private javax.swing.JProgressBar astral_nodule_pbar;
+    private javax.swing.JLabel astral_nodules_value;
     private javax.swing.JLabel centurio_seals_pic;
     private javax.swing.JButton clear_button;
     private javax.swing.JLabel dispelling_arrow_pic;
@@ -2131,15 +2281,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2151,6 +2293,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -2160,7 +2303,6 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JLabel kingcake_pic;
     private javax.swing.JLabel kingcake_text;
@@ -2191,12 +2333,25 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JLabel poetic_tomestones_pic9;
     private javax.swing.JLabel rainbowtide_psashp_pic;
     private javax.swing.JButton save_button;
+    private javax.swing.JButton stage1CompleteButton;
     private javax.swing.JButton stage2CompleteButton;
     private javax.swing.JProgressBar stage2_pbar;
+    private javax.swing.JLabel stage2_stage01;
+    private javax.swing.JLabel stage2_stage02;
+    private javax.swing.JLabel stage2_stage03;
+    private javax.swing.JLabel stage2_stage04;
+    private javax.swing.JLabel stage2_stage05;
+    private javax.swing.JLabel stage2_stage06;
+    private javax.swing.JLabel stage2_stage07;
+    private javax.swing.JLabel stage2_stage08;
+    private javax.swing.JLabel stage2_stage09;
+    private javax.swing.JLabel stage2_stage10;
     private javax.swing.JComboBox<String> stage_selector;
     private javax.swing.JLabel status_text;
     private javax.swing.JLabel steel_amaljok_pic;
     private javax.swing.JLabel sylphic_goldleaf_pic;
+    private javax.swing.JTabbedPane tabs_stages;
+    private javax.swing.JButton testButton;
     private javax.swing.JLabel titan_cobaltpiece_pic;
     private javax.swing.JLabel titanium_alloy_mirror_pic;
     private javax.swing.JLabel titanium_alloy_mirror_text;
@@ -2209,6 +2364,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JButton umbral_nodule_acquire_button;
     private javax.swing.JPanel umbral_nodule_panel;
     private javax.swing.JProgressBar umbral_nodule_pbar;
+    private javax.swing.JLabel umbral_nodules_value;
     private javax.swing.JLabel unidentifiable_bone_pic;
     private javax.swing.JLabel unidentifiable_ore_pic;
     private javax.swing.JLabel unidentifiable_seed_pic;
@@ -2218,7 +2374,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JLabel ushell_value;
     // End of variables declaration//GEN-END:variables
 
-
+    //digits not used anymore, needs refactoring
     private String changeValue(String inputString, int mouseButton, int digits, int limit) {
         Integer int_value = Integer.valueOf(inputString.substring(0,digits));
         
@@ -2243,14 +2399,73 @@ public class MainWin extends javax.swing.JFrame {
         if (digits>1){
             formattedVal = String.format("%02d",int_value);
         } else {
-            formattedVal = String.format("%1d",int_value);
+            formattedVal = String.format("%1d",int_value); //not used anymore
         }
         
         return formattedVal+inputString.substring(digits);
     }
 
-    private void setValues() {
-        Iterator i = collection.returnValues();
+    private void setStage1Values(){
+        Iterator i = collection.returnStage1Values();
+        String value;
+        
+        value = luminous_fire_crystal_value.getText().substring(2);
+        luminous_fire_crystal_value.setText(returnValue((int)i.next(),2)+value);
+        value = luminous_wind_crystal_value.getText().substring(2);
+        luminous_wind_crystal_value.setText(returnValue((int)i.next(),2)+value);
+        value = luminous_lightning_crystal_value.getText().substring(2);
+        luminous_lightning_crystal_value.setText(returnValue((int)i.next(),2)+value);
+        
+        value = luminous_ice_crystal_value.getText().substring(2);
+        luminous_ice_crystal_value.setText(returnValue((int)i.next(),2)+value);
+        value = luminous_earth_crystal_value.getText().substring(2);
+        luminous_earth_crystal_value.setText(returnValue((int)i.next(),2)+value);
+        value = luminous_water_crystal_value.getText().substring(2);
+        luminous_water_crystal_value.setText(returnValue((int)i.next(),2)+value);
+        
+        value = astral_nodules_value.getText().substring(2);
+        astral_nodules_value.setText(returnValue((int)i.next(),2)+value);
+        value = umbral_nodules_value.getText().substring(2);
+        umbral_nodules_value.setText(returnValue((int)i.next(),2)+value);
+    }
+    
+    private void setStage2Values(){
+        Iterator i = collection.returnStage2Values();
+        Color background;
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage01.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage02.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage03.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage04.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage05.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage06.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage07.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage08.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage09.setBackground(background);
+        
+        background = (((int)i.next() == 1) ? Color.DARK_GRAY : new Color(204, 204, 204));
+        stage2_stage10.setBackground(background);
+    }
+    
+    private void setStage3Values() {
+        Iterator i = collection.returnStage3Values();
         String value;
         
         value = ubone_value.getText().substring(2);
@@ -2262,25 +2477,60 @@ public class MainWin extends javax.swing.JFrame {
         value = useed_value.getText().substring(2);
         useed_value.setText(returnValue((int)i.next(),2)+value);
         
-        value = adamantite_francesca_value.getText().substring(1);
-        adamantite_francesca_value.setText(returnValue((int)i.next(),1)+value);
-        value = titanium_alloy_value.getText().substring(1);
-        titanium_alloy_value.setText(returnValue((int)i.next(),1)+value);
-        value = dispelling_arrow_value.getText().substring(1);
-        dispelling_arrow_value.setText(returnValue((int)i.next(),1)+value);
-        value = kingcake_value.getText().substring(1);
-        kingcake_value.setText(returnValue((int)i.next(),1)+value);
+        value = adamantite_francesca_value.getText().substring(2);
+        adamantite_francesca_value.setText(returnValue((int)i.next(),2)+value);
+        value = titanium_alloy_value.getText().substring(2);
+        titanium_alloy_value.setText(returnValue((int)i.next(),2)+value);
+        value = dispelling_arrow_value.getText().substring(2);
+        dispelling_arrow_value.setText(returnValue((int)i.next(),2)+value);
+        value = kingcake_value.getText().substring(2);
+        kingcake_value.setText(returnValue((int)i.next(),2)+value);
     }
 
     private void getAllValues() {
+        //stage
+        allValues.add(getStage());
+        //stage 1 values
+        allValues.add(Integer.valueOf(luminous_fire_crystal_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(luminous_wind_crystal_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(luminous_lightning_crystal_value.getText().substring(0, 2)));
+        
+        allValues.add(Integer.valueOf(luminous_ice_crystal_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(luminous_earth_crystal_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(luminous_water_crystal_value.getText().substring(0, 2)));
+        
+        allValues.add(Integer.valueOf(astral_nodules_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(umbral_nodules_value.getText().substring(0, 2)));
+        
+        
+        //stage 2 values
+        allValues.add(getStateOfStage(stage2_stage01));
+        allValues.add(getStateOfStage(stage2_stage02));
+        allValues.add(getStateOfStage(stage2_stage03));
+        allValues.add(getStateOfStage(stage2_stage04));
+        allValues.add(getStateOfStage(stage2_stage05));
+        allValues.add(getStateOfStage(stage2_stage06));
+        allValues.add(getStateOfStage(stage2_stage07));
+        allValues.add(getStateOfStage(stage2_stage08));
+        allValues.add(getStateOfStage(stage2_stage09));
+        allValues.add(getStateOfStage(stage2_stage10));
+        
+        //stage 3 values
         allValues.add(Integer.valueOf(ubone_value.getText().substring(0, 2)));
         allValues.add(Integer.valueOf(ushell_value.getText().substring(0, 2)));
         allValues.add(Integer.valueOf(uore_value.getText().substring(0, 2)));
         allValues.add(Integer.valueOf(useed_value.getText().substring(0, 2)));
-        allValues.add(Integer.valueOf(adamantite_francesca_value.getText().substring(0, 1)));
-        allValues.add(Integer.valueOf(titanium_alloy_value.getText().substring(0, 1)));
-        allValues.add(Integer.valueOf(dispelling_arrow_value.getText().substring(0, 1)));
-        allValues.add(Integer.valueOf(kingcake_value.getText().substring(0, 1)));
+        allValues.add(Integer.valueOf(adamantite_francesca_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(titanium_alloy_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(dispelling_arrow_value.getText().substring(0, 2)));
+        allValues.add(Integer.valueOf(kingcake_value.getText().substring(0, 2)));
+        
+        //stage 4 values
+        
+        //stage 5 values'
+        
+        //tokens
+        
     }
 
     private String returnValue(int input, int digits) {
@@ -2316,7 +2566,15 @@ public class MainWin extends javax.swing.JFrame {
     private void load_saved_data() {
         try {
             collection = new Collection();
-            setValues();
+            
+            tabs_stages.setSelectedIndex(collection.getStageNumber());
+            
+            setStage1Values();
+            setStage2Values();
+            setStage3Values();
+            
+            updateAllProgressBars();
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MainWin.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2325,11 +2583,19 @@ public class MainWin extends javax.swing.JFrame {
         
     }
 
-    private void progressbar_change(JProgressBar pbar, JLabel tokens, JLabel crafts) {
+    private void progressbar_change_stage3(JProgressBar pbar, JLabel tokens, JLabel crafts) {
         
-        int value_max = 24;
+        int value_max = 14;
         int value1 = Integer.valueOf(tokens.getText().substring(0, 2));      
-        int value2 = Integer.valueOf(crafts.getText().substring(0, 1));
+        int value2 = Integer.valueOf(crafts.getText().substring(0, 2));
+        
+        //limit progress bar on each value 10 and 4 respectively
+        if (value1 >= 10){
+            value1 = 10;
+        }
+        if (value2 >= 4){
+            value2 = 4;
+        }
         
         double progress_double = (((double)value1 + (double)value2)/(double)value_max)*100;
         int progress_int = (int)progress_double;
@@ -2344,10 +2610,11 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void setProgressBars() {
-        progressbar_change(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
-        progressbar_change(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
-        progressbar_change(divine_water_pbar, uore_value, dispelling_arrow_value);
-        progressbar_change(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);        
+        
+        progressbar_change_stage3(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
+        progressbar_change_stage3(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
+        progressbar_change_stage3(divine_water_pbar, uore_value, dispelling_arrow_value);
+        progressbar_change_stage3(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);        
     }
 
     private void stage2ChangeStatus(JLabel jlabel) {
@@ -2364,16 +2631,16 @@ public class MainWin extends javax.swing.JFrame {
 
     private void checkStatus() {
         ArrayList<Integer> stage2Labels = new ArrayList<>();
-        stage2Labels.add(jLabel47.getBackground().getBlue());
-        stage2Labels.add(jLabel48.getBackground().getBlue());
-        stage2Labels.add(jLabel49.getBackground().getBlue());
-        stage2Labels.add(jLabel50.getBackground().getBlue());
-        stage2Labels.add(jLabel51.getBackground().getBlue());
-        stage2Labels.add(jLabel52.getBackground().getBlue());
-        stage2Labels.add(jLabel53.getBackground().getBlue());
-        stage2Labels.add(jLabel54.getBackground().getBlue());
-        stage2Labels.add(jLabel55.getBackground().getBlue());
-        stage2Labels.add(jLabel56.getBackground().getBlue());
+        stage2Labels.add(stage2_stage01.getBackground().getBlue());
+        stage2Labels.add(stage2_stage02.getBackground().getBlue());
+        stage2Labels.add(stage2_stage03.getBackground().getBlue());
+        stage2Labels.add(stage2_stage04.getBackground().getBlue());
+        stage2Labels.add(stage2_stage05.getBackground().getBlue());
+        stage2Labels.add(stage2_stage06.getBackground().getBlue());
+        stage2Labels.add(stage2_stage07.getBackground().getBlue());
+        stage2Labels.add(stage2_stage08.getBackground().getBlue());
+        stage2Labels.add(stage2_stage09.getBackground().getBlue());
+        stage2Labels.add(stage2_stage10.getBackground().getBlue());
         
         int stage2_progress = 0;
         
@@ -2408,6 +2675,7 @@ public class MainWin extends javax.swing.JFrame {
         int crystal2 = Integer.valueOf(crystal_value2.getText().substring(0, 2));
         int crystal3 = Integer.valueOf(crystal_value3.getText().substring(0, 2));
         
+        // limits each value to 3 in whole progress
         if (crystal1 > 3){
             crystal1 = 3;
         }
@@ -2435,7 +2703,7 @@ public class MainWin extends javax.swing.JFrame {
         
     }
 
-    private void acquiredNodule(JLabel crystal1Label, JLabel crystal2Label, JLabel crystal3Label) {
+    private void acquiredNodule(JLabel crystal1Label, JLabel crystal2Label, JLabel crystal3Label, JLabel nodules_value) {
         String crystal1Text = crystal1Label.getText().substring(2);
         String crystal2Text = crystal2Label.getText().substring(2);
         String crystal3Text = crystal3Label.getText().substring(2);
@@ -2443,29 +2711,81 @@ public class MainWin extends javax.swing.JFrame {
         int crystal1 = Integer.valueOf(crystal1Label.getText().substring(0, 2));
         int crystal2 = Integer.valueOf(crystal2Label.getText().substring(0, 2));
         int crystal3 = Integer.valueOf(crystal3Label.getText().substring(0, 2));
+        int nodule = Integer.valueOf(nodules_value.getText());
         
         crystal1 -= 3;
         crystal2 -= 3;
         crystal3 -= 3;
+        nodule++;
         
         crystal1Label.setText(String.format("%02d", crystal1) + crystal1Text);
         crystal2Label.setText(String.format("%02d", crystal2) + crystal2Text);
         crystal3Label.setText(String.format("%02d", crystal3) + crystal3Text);
+        nodules_value.setText(String.format("%02d", nodule));
     }
 
     private void clearStage2Progress(JProgressBar pbar) {
-        jLabel47.setBackground(new Color(204,204,204));
-        jLabel48.setBackground(new Color(204,204,204));
-        jLabel49.setBackground(new Color(204,204,204));
-        jLabel50.setBackground(new Color(204,204,204));
-        jLabel51.setBackground(new Color(204,204,204));
-        jLabel52.setBackground(new Color(204,204,204));
-        jLabel53.setBackground(new Color(204,204,204));
-        jLabel54.setBackground(new Color(204,204,204));
-        jLabel55.setBackground(new Color(204,204,204));
-        jLabel56.setBackground(new Color(204,204,204));
+        stage2_stage01.setBackground(new Color(204,204,204));
+        stage2_stage02.setBackground(new Color(204,204,204));
+        stage2_stage03.setBackground(new Color(204,204,204));
+        stage2_stage04.setBackground(new Color(204,204,204));
+        stage2_stage05.setBackground(new Color(204,204,204));
+        stage2_stage06.setBackground(new Color(204,204,204));
+        stage2_stage07.setBackground(new Color(204,204,204));
+        stage2_stage08.setBackground(new Color(204,204,204));
+        stage2_stage09.setBackground(new Color(204,204,204));
+        stage2_stage10.setBackground(new Color(204,204,204));
         pbar.setValue(0);
                 
+    }
+
+    private Integer getStage() {
+        return stage_selector.getSelectedIndex();
+    }
+
+    private int getStateOfStage(JLabel stage) {
+        int blue = stage.getBackground().getBlue();
+        if (blue == 204){
+            blue = 0;
+        } else {
+            blue = 1;
+        }
+     return blue;   
+    }
+
+    private void updateAllProgressBars() {
+        progressbar_change_stage1(astral_nodule_pbar, luminous_fire_crystal_value, luminous_wind_crystal_value, luminous_lightning_crystal_value, astral_nodule_acquire_button);
+        progressbar_change_stage1(umbral_nodule_pbar, luminous_ice_crystal_value, luminous_earth_crystal_value, luminous_water_crystal_value, umbral_nodule_acquire_button);
+        
+        checkStatus();
+        
+        progressbar_change_stage3(fast_acting_allagan_catalyst_pbar, useed_value, kingcake_value);
+        progressbar_change_stage3(divine_water_pbar, uore_value, dispelling_arrow_value);
+        progressbar_change_stage3(fast_drying_carboncoat_pbar, ushell_value, titanium_alloy_value);
+        progressbar_change_stage3(enchanted_rubber_pbar, ubone_value, adamantite_francesca_value);
+        
+    }
+
+    private void checkNodules(JLabel astral_nodule, JLabel umbral_nodule) {
+        int a_nodule = Integer.valueOf(astral_nodule.getText());
+        int u_nodule = Integer.valueOf(umbral_nodule.getText());
+        
+        if (a_nodule > 0 & u_nodule > 0){
+            stage1CompleteButton.setEnabled(true);
+        } else {
+            stage1CompleteButton.setEnabled(false);
+        }
+    }
+
+    private void consumeNodules(JLabel astral_nodule, JLabel umbral_nodule) {
+        int a_nodule = Integer.valueOf(astral_nodule.getText());
+        int u_nodule = Integer.valueOf(umbral_nodule.getText());
+        
+        a_nodule--;
+        u_nodule--;
+        
+        astral_nodule.setText(String.format("%02d", a_nodule));
+        umbral_nodule.setText(String.format("%02d", u_nodule));
     }
 
 
