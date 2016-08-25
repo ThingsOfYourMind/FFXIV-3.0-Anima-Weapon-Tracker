@@ -40,34 +40,38 @@ public class MainWin extends javax.swing.JFrame {
     String buildVersion = "3";
     String forPatch = "Patch 3.38";
     
+    // Directory paths.
+    static final String MEDIA_DIRECTORY = "." + File.separator + "media" + File.separator;
+    static final String CURRENCY_DIRECTORY = MEDIA_DIRECTORY + "currency" + File.separator ;
+    static final String CRYSTALS_DIRECTORY = MEDIA_DIRECTORY + "crystals" + File.separator;
     
     //UI icons stuffs
-    String ubone_icon = ".\\media\\Unidentifiable_Bone_Icon.png";
-    String ushell_icon = ".\\media\\Unidentifiable_Shell_Icon.png";
-    String uore_icon = ".\\media\\Unidentifiable_Ore_Icon.png";
-    String useed_icon = ".\\media\\Unidentifiable_Seeds_Icon.png";
-    String adamantite_francesca_icon = ".\\media\\Adamantite_Francesca_Icon.png";
-    String titanium_alloy_mirror_icon = ".\\media\\Titanium_Alloy_Mirror_Icon.png";
-    String dispelling_arrow_icon = ".\\media\\Dispelling_Arrow_Icon.png";
-    String kingcake_icon = ".\\media\\Kingcake_Icon.png";
-    String poetics_icon = ".\\media\\currency\\poetics_icon.png";
-    String esoterics_icon = ".\\media\\currency\\esoterics_icon.png";
-    String lore_icon = ".\\media\\currency\\lore_icon.png";
-    String allied_seals_icon = ".\\media\\currency\\allied_seal_icon.png";
-    String centurio_seals_icon = ".\\media\\currency\\centurio_seal_icon.png";
+    String ubone_icon = MEDIA_DIRECTORY + "Unidentifiable_Bone_Icon.png";
+    String ushell_icon = MEDIA_DIRECTORY +  "Unidentifiable_Shell_Icon.png";
+    String uore_icon = MEDIA_DIRECTORY + "Unidentifiable_Ore_Icon.png";
+    String useed_icon = MEDIA_DIRECTORY + "Unidentifiable_Seeds_Icon.png";
+    String adamantite_francesca_icon = MEDIA_DIRECTORY + "Adamantite_Francesca_Icon.png";
+    String titanium_alloy_mirror_icon = MEDIA_DIRECTORY + "Titanium_Alloy_Mirror_Icon.png";
+    String dispelling_arrow_icon = MEDIA_DIRECTORY + "Dispelling_Arrow_Icon.png";
+    String kingcake_icon = MEDIA_DIRECTORY + "Kingcake_Icon.png";
+    String poetics_icon = CURRENCY_DIRECTORY + "poetics_icon.png";
+    String esoterics_icon = CURRENCY_DIRECTORY + "esoterics_icon.png";
+    String lore_icon = CURRENCY_DIRECTORY + "lore_icon.png";
+    String allied_seals_icon = CURRENCY_DIRECTORY + "allied_seal_icon.png";
+    String centurio_seals_icon = CURRENCY_DIRECTORY + "centurio_seal_icon.png";
     
-    String steel_amaljok_icon = ".\\media\\currency\\steel_amalj'ok_icon.png";
-    String sylphic_goldleaf_icon = ".\\media\\currency\\sylphic_goldleaf_icon.png";
-    String titan_cobaltpiece_icon = ".\\media\\currency\\titan_cobaltpiece_icon.png";
-    String rainbowtide_psashp_icon = ".\\media\\currency\\rainbowtide_psashp_icon.png";
-    String ixali_oaknot_icon = ".\\media\\currency\\ixali_oaknot_icon.png";
+    String steel_amaljok_icon = CURRENCY_DIRECTORY + "steel_amalj'ok_icon.png";
+    String sylphic_goldleaf_icon = CURRENCY_DIRECTORY + "sylphic_goldleaf_icon.png";
+    String titan_cobaltpiece_icon = CURRENCY_DIRECTORY + "titan_cobaltpiece_icon.png";
+    String rainbowtide_psashp_icon = CURRENCY_DIRECTORY + "rainbowtide_psashp_icon.png";
+    String ixali_oaknot_icon = CURRENCY_DIRECTORY + "ixali_oaknot_icon.png";
     
-    String luminous_fire_crystal_icon = ".\\media\\crystals\\luminous_fire_crystal_icon.png";
-    String luminous_wind_crystal_icon = ".\\media\\crystals\\luminous_wind_crystal_icon.png";
-    String luminous_lightning_crystal_icon = ".\\media\\crystals\\luminous_lightning_crystal_icon.png";
-    String luminous_ice_crystal_icon = ".\\media\\crystals\\luminous_ice_crystal_icon.png";
-    String luminous_earth_crystal_icon = ".\\media\\crystals\\luminous_earth_crystal_icon.png";
-    String luminous_water_crystal_icon = ".\\media\\crystals\\luminous_water_crystal_icon.png";
+    String luminous_fire_crystal_icon = CRYSTALS_DIRECTORY + "luminous_fire_crystal_icon.png";
+    String luminous_wind_crystal_icon = CRYSTALS_DIRECTORY + "luminous_wind_crystal_icon.png";
+    String luminous_lightning_crystal_icon = CRYSTALS_DIRECTORY + "luminous_lightning_crystal_icon.png";
+    String luminous_ice_crystal_icon = CRYSTALS_DIRECTORY + "luminous_ice_crystal_icon.png";
+    String luminous_earth_crystal_icon = CRYSTALS_DIRECTORY + "luminous_earth_crystal_icon.png";
+    String luminous_water_crystal_icon = CRYSTALS_DIRECTORY + "luminous_water_crystal_icon.png";
     
     
     // used for collectin all the values
@@ -133,7 +137,7 @@ public class MainWin extends javax.swing.JFrame {
                 appHeight);
         
         // sets app Icon
-        this.setIconImage(new ImageIcon(".\\media\\moogle_icon.png").getImage());
+        this.setIconImage(new ImageIcon(MEDIA_DIRECTORY + "moogle_icon.png").getImage());
         
         stage_selector.setModel(new StageSelectorComboBoxModel());
         
@@ -651,7 +655,7 @@ public class MainWin extends javax.swing.JFrame {
                                         .addComponent(luminous_ice_crystal_text, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(luminous_ice_crystal_value, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGap(0, 7, Short.MAX_VALUE))
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(umbral_nodule_panelLayout.createSequentialGroup()
                                 .addGap(38, 38, 38)
@@ -702,7 +706,7 @@ public class MainWin extends javax.swing.JFrame {
                     .addComponent(umbral_nodule_acquire_button)
                     .addComponent(jLabel48)
                     .addComponent(umbral_nodules_value))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         stage1CompleteButton.setText("Complete Stage 1");
@@ -739,7 +743,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(umbral_nodule_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(umbral_nodule_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 302, Short.MAX_VALUE)
                     .addComponent(astral_nodule_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(stage1CompleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
@@ -1086,7 +1090,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(adamantite_francesca_text)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adamantite_francesca_value, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                .addComponent(adamantite_francesca_value, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1102,7 +1106,7 @@ public class MainWin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(adamantite_francesca_text)
                         .addComponent(adamantite_francesca_value)))
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1180,7 +1184,7 @@ public class MainWin extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(dispelling_arrow_text)
                         .addComponent(dispelling_arrow_value)))
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1361,7 +1365,7 @@ public class MainWin extends javax.swing.JFrame {
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                             .addComponent(fast_acting_allagan_catalyst_pbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(divine_water_pbar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
