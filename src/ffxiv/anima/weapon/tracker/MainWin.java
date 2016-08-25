@@ -42,7 +42,7 @@ public class MainWin extends javax.swing.JFrame {
     
     // Directory paths.
     static final String MEDIA_DIRECTORY = "." + File.separator + "media" + File.separator;
-    static final String CURRENCY_DIRECTORY = MEDIA_DIRECTORY + "currency" + File.separator ;
+    static final String CURRENCY_DIRECTORY = MEDIA_DIRECTORY + "currency" + File.separator;
     static final String CRYSTALS_DIRECTORY = MEDIA_DIRECTORY + "crystals" + File.separator;
     
     //UI icons stuffs
